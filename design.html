@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="design_style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Transcription</title>   
+</head>
+
+<body>
+    <div class="container">
+        <h1>Upload Audio for Transcription</h1>
+        <form id="uploadForm">
+            <input type="file" id="audioFile" accept="audio/*" required>
+            <button  class="btnn" type="submit">Transcribe</button>
+        </form>
+        <h5>Transcription:</h5>
+        <div class="transcription-result" id="transcriptionResult"></div>
+        <h5>Detected Language:</h5>
+        <div class="Detected-Language" id="DetectedLanguage"></div>
+    </div>
+    
+
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', async (event) => 
+        {
+            event.preventDefault();                                                             
+            const fileInput = document.getElementById('audioFile');
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+
+            const response = await fetch('http://localhost:8000/transcribe/', {
+                method: 'POST',
+                body: formData
+            });
+
+            const result = await response.json();
+            document.getElementById('transcriptionResult').textContent = result.transcription;
+            document.getElementById('DetectedLanguage').textContent = result.detected_language;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: 'Times New Roman', Times, serif;
+    padding: 20px;
+}
+.container {
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: 0 auto;
+    background: url(img1.jpg);
+    background-position: center;
+    background-size: cover;
+    height: 120vh;
+}
+
+.btnn{
+    width: 250px;
+    height: 40px;
+    background: rgb(6, 123, 123);
+    border: none;
+    margin-top: 30px;
+    font-size: 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    color: white;
+    transition: .4s ease;
+}
+.btnn:hover{
+    background: rgb(145, 85, 85);
+    color: orange;
+
+}
+
+.btnn a{
+    text-decoration: none;
+    font-family: Helvetica;
+    color: rgb(170, 11, 11);
+    font-weight: bold;
+}
