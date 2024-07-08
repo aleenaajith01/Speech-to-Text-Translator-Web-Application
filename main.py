@@ -1,9 +1,22 @@
 from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.responses import FileResponse
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
 import whisper
 import tempfile
 
-app = FastAPI()
+
+api_app = FastAPI(title="api app")
+
+@api_app.post("/set_influencers_to_follow")
+async def set_influencers_to_follow(request):
+    return {}
+
+
+app = FastAPI(title="main app")
+
+
 
 def transcribe_audio(file):
     with tempfile.NamedTemporaryFile(delete=False) as tmp:
@@ -51,6 +64,9 @@ app.add_middleware(
     allow_methods=["*"],  # Allows all methods
     allow_headers=["*"],  # Allows all headers
 )
+
+app.mount("/api", api_app)
+app.mount("/", StaticFiles(directory="static", html=True), name="static")
 
 if __name__ == "__main__":
     import uvicorn
