@@ -1,33 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link href="style.css" rel="stylesheet" type="text/css">
+    <!-- <link href="style.css" rel="stylesheet"> -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Audio Transcription</title>
+    <style>
+    /* style.css */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #d6ccc9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 50px;
+            background-color: #d2b2a8;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border: 2px solid #606263;
+            border-radius: 4px;
+            background: url('image1.jpg') no-repeat center center;
+            background-size: cover;
+        }
+
+
+         .header {
+        display: flex;
+        align-items: center;
+        }
+
+        .icon {
+            margin-right: 5px;
+            margin-bottom: 0px; /* Adjust margin-bottom as needed */
+        }
+
+        .icon img {
+            width: 100px; /* Adjust size as needed */
+        }
+
+        h1 {
+            flex-grow: 1; /* This will make the h1 take up the available space */
+            margin-right: 20px; /* Add margin to separate title and small image */
+            margin-bottom: 100px; /* Adjust the space below the h1 */
+            font-size: 40px;
+            font-family: 'Georgia';
+        }
+
+        .small-image-container {
+            margin-left: auto; /* Pushes the small image container to the right */
+        }
+
+        .small-image {
+            width: 600px; /* Adjust width as needed */
+            height: auto; /* Maintain aspect ratio */
+            margin-left: 20px;
+            margin-right: 40px; /* Add margin to separate title and small image */
+            margin-bottom: 100px;
+        }
+
+        h4 {
+            margin-top: -150px; /* Adjust the space above the h4 */
+            font-family: 'Georgia';
+        }
+        h5{
+            font-family: 'Georgia';
+            font-size: 18px;
+        }
+
+        .btnn {
+            background-color: #563939;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 20px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-family: 'Georgia';
+        }
+
+        .btnn:hover {
+            background-color: #9f8e90;
+        }
+
+        .transcription-result {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #171414;
+            border-radius: 5px;
+            background-color: #f3d6be78;
+            font-family: 'Georgia';
+        }
+
+        .Detected-Language {
+            margin-top: 5px;
+            padding: 20px;
+            border: 1px solid #141618;
+            border-radius: 5px;
+            background-color: #f3d6be78;
+            font-family: 'Georgia';
+            
+        }
+</style>
 </head>
 
 <body>
     <div class="container">
-        <h1>Upload Audio for Transcription</h1>
+        <div class="icon">
+            <img src="openai-removebg-preview.png" alt="Icon">
+        </div>
+        <div class="header">
+            <h1>Audio Transcriber</h1>
+            <div class="small-image-container">
+                <img class="small-image" src="voice-to-text-ia-removebg-preview.png" alt="Small Icon">
+            </div>
+        </div>
+        
+        <h4>Upload an audio:</h3>
         <form id="uploadForm">
             <input type="file" id="audioFile" accept="audio/*" required>
+            <newline></newline>
             <button  class="btnn" type="submit">Transcribe</button>
         </form>
+        <audio id="audioPlayer" controls style="display:none;"></audio> 
+
         <h5>Transcription:</h5>
         <div class="transcription-result" id="transcriptionResult"></div>
-        <h5>Detected Language:</h5>
+
+        <h5>Detected Lang:</h5>
         <div class="Detected-Language" id="DetectedLanguage"></div>
+        
     </div>
 
 
     <script>
-        document.getElementById('uploadForm').addEventListener('submit', async (event) =>
-        {
+        document.getElementById('uploadForm').addEventListener('submit', async (event) => {
             event.preventDefault();
             const fileInput = document.getElementById('audioFile');
+            const file = fileInput.files[0];
             const formData = new FormData();
-            formData.append('file', fileInput.files[0]);
+            formData.append('file', file);
+
+            // Display the audio player
+            const audioPlayer = document.getElementById('audioPlayer');
+            const objectUrl = URL.createObjectURL(file);
+            audioPlayer.src = objectUrl;
+            audioPlayer.style.display = 'block';
 
             const response = await fetch('http://localhost:8000/transcribe/', {
                 method: 'POST',

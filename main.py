@@ -33,14 +33,14 @@ def transcribe_audio(file):
     # Detect the spoken language
     _, probs = model.detect_language(mel)
     detected_language = max(probs, key=probs.get)
-    print(f"Detected language: {detected_language}")
+    #print(f"Detected language: {detected_language}")
 
     # Decode the audio
     options = whisper.DecodingOptions()
     result = whisper.decode(model, mel, options)
 
     # Print the recognized text
-    print(result.text)
+    #print(result.text)
 
     return result.text, detected_language
 
