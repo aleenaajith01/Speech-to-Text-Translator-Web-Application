@@ -1,4 +1,4 @@
-Python 10 or above versions
-pytorch
-ffmpeg
+Python 3.10 or above versions
+PyTorch
+FFmpeg
 WhisperAi
