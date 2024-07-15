@@ -1,0 +1,4 @@
+Python 10 or above versions
+pytorch
+ffmpeg
+WhisperAi
