@@ -6,3 +6,5 @@ Whisper AI is a machine learning model for speech recognition and transcription,
 
 This project includes
 #### Python, HTML & CSS, Javascript
+
+![image](https://github.com/user-attachments/assets/ad16f594-13fe-40ef-8ce5-13479cb96639)
